@@ -15,7 +15,7 @@ const isStandalone =
  * Public repository of the code. The AGPL (section 13) asks that people using the app online be offered its
  * source: set this before deploying. Left empty, only the licence is linked.
  */
-const SOURCE_URL: string = ''
+const SOURCE_URL: string = 'https://github.com/kerb3ros-dev/no-faces'
 
 /** `videoReason`: why videos are refused on this device, or null if they are accepted. `onCamera`: null without a camera API. */
 export function Welcome({ onPick, onCamera, videoReason }: { onPick: () => void; onCamera: (() => void) | null; videoReason: string | null }) {
