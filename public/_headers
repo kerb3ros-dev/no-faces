@@ -1,0 +1,11 @@
+# Cloudflare Pages / Netlify headers.
+# connect-src 'self' forbids any network request to another site: photos cannot be sent anywhere.
+# camera=(self): photos taken inside the app (never saved to the camera roll); no microphone.
+# COOP + COEP make the page cross-origin isolated, which enables multi-threaded detection.
+/*
+  Cross-Origin-Opener-Policy: same-origin
+  Cross-Origin-Embedder-Policy: require-corp
+  Content-Security-Policy: default-src 'self'; script-src 'self' 'wasm-unsafe-eval'; worker-src 'self' blob:; connect-src 'self'; img-src 'self' blob: data:; style-src 'self' 'unsafe-inline'; object-src 'none'; base-uri 'self'; form-action 'none'; frame-ancestors 'none'
+  Referrer-Policy: no-referrer
+  Permissions-Policy: camera=(self), microphone=(), geolocation=()
+  X-Content-Type-Options: nosniff

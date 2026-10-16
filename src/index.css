@@ -1,0 +1,1338 @@
+/* Look and palette: site_ui_vector_kit (palette.css, icons and patterns). */
+
+:root {
+  /* Kit palette */
+  --green: #57e298;
+  --orange: #ff5321;
+  --black: #0b1c1e;
+  --steel: #6cabc8;
+  --ice: #e1eff8;
+
+  --bg: var(--black);
+  --surface: color-mix(in srgb, var(--steel) 7%, var(--black));
+  --surface-2: color-mix(in srgb, var(--steel) 14%, var(--black));
+  --border: color-mix(in srgb, var(--steel) 32%, var(--black));
+  --text: var(--ice);
+  --muted: color-mix(in srgb, var(--ice) 62%, var(--black));
+  --accent: var(--orange);
+  --accent-text: var(--black);
+  --zone: var(--green);
+  --zone-manual: var(--orange);
+  --zone-area: var(--steel);
+  --zone-kept: var(--ice);
+  --danger: var(--orange);
+  --radius: 0;
+  /* Fonts of the brand guide, served with the app (src/main.tsx). */
+  --font-title: 'VT323', ui-monospace, monospace;
+  /* No accented capitals in Press Start 2P: only for text without them (name, eyebrow). */
+  --font-subtitle: 'Press Start 2P', ui-monospace, monospace;
+  --mono: 'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+  --font-text: var(--mono);
+  /* The guide's stepped gradient, green to black to orange. */
+  --spectrum: linear-gradient(90deg, #57e298 0.00% 5.56%, #4ec989 5.56% 11.11%, #44b07a 11.11% 16.67%, #3a986a 16.67% 22.22%, #317f5b 22.22% 27.78%, #28664c 27.78% 33.33%, #1e4e3c 33.33% 38.89%, #14352d 38.89% 44.44%, #0b1c1e 44.44% 50.00%, #0b1c1e 50.00% 55.56%, #2a231e 55.56% 61.11%, #482a1f 61.11% 66.67%, #66311f 66.67% 72.22%, #853820 72.22% 77.78%, #a43e20 77.78% 83.33%, #c24520 83.33% 88.89%, #e04c21 88.89% 94.44%, #ff5321 94.44% 100.00%);
+  --hazard: repeating-linear-gradient(-45deg, var(--orange) 0 8px, transparent 8px 20px);
+  color-scheme: dark;
+  font-family: var(--font-text);
+  color: var(--text);
+  background: var(--bg);
+  -webkit-text-size-adjust: 100%;
+  -webkit-tap-highlight-color: transparent;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  margin: 0;
+  height: 100%;
+  background: var(--bg);
+}
+
+::selection {
+  background: var(--green);
+  color: var(--black);
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+}
+
+button:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+:focus-visible {
+  outline: 2px solid var(--green);
+  outline-offset: 2px;
+}
+
+.icon {
+  flex: none;
+}
+
+.app {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+}
+
+/* Header */
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 16px;
+  border-bottom: 3px solid;
+  border-image: var(--spectrum) 1;
+  background: var(--bg);
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-subtitle);
+  font-size: 12px;
+  color: var(--green);
+}
+
+.brand .emblem {
+  display: block;
+}
+
+/* Phones: the logo alone, so that the header buttons fit (see also the end of the file). */
+@media (max-width: 440px) {
+  .brand span {
+    display: none;
+  }
+}
+
+/* The kit's "online" status: a filled green block. */
+.local-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  white-space: nowrap;
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--black);
+  background: var(--green);
+  padding: 4px 9px;
+}
+
+.local-badge::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--black);
+}
+
+.header .button {
+  margin-left: auto;
+}
+
+/* Buttons: square, monospace, upper case — like the kit's primary and secondary buttons. */
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border: 2px solid var(--steel);
+  background: transparent;
+  border-radius: 0;
+  padding: 8px 14px;
+  font-family: var(--mono);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  min-height: 44px;
+  transition:
+    background-color 0.15s,
+    border-color 0.15s,
+    color 0.15s;
+}
+
+.button:not(:disabled):hover {
+  background: color-mix(in srgb, var(--steel) 14%, transparent);
+}
+
+.button.ghost {
+  border-color: var(--border);
+  color: var(--muted);
+}
+
+.button.ghost:not(:disabled):hover {
+  border-color: var(--steel);
+  color: var(--text);
+  background: transparent;
+}
+
+.button.primary {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--accent-text);
+  font-weight: 700;
+}
+
+.button.primary:not(:disabled):hover {
+  background: color-mix(in srgb, var(--orange) 82%, var(--ice));
+  border-color: color-mix(in srgb, var(--orange) 82%, var(--ice));
+}
+
+/* The kit's arrow, at the end of every primary button. */
+.button.primary::after {
+  content: '';
+  flex: none;
+  width: 18px;
+  height: 18px;
+  margin-left: 4px;
+  background: currentColor;
+  -webkit-mask: url('./assets/ui/icon-arrow-right.svg') center / contain no-repeat;
+  mask: url('./assets/ui/icon-arrow-right.svg') center / contain no-repeat;
+  transition: transform 0.15s;
+}
+
+.button.primary:not(:disabled):hover::after {
+  transform: translateX(3px);
+}
+
+.button.big {
+  font-size: 15px;
+  padding: 14px 26px;
+  min-height: 56px;
+}
+
+.button.active {
+  border-color: var(--zone-manual);
+  color: var(--zone-manual);
+  background: color-mix(in srgb, var(--zone-manual) 12%, transparent);
+}
+
+.button.danger {
+  border-color: var(--danger);
+  color: var(--danger);
+}
+
+.link {
+  background: none;
+  border: none;
+  padding: 0;
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--steel);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* Welcome */
+
+.welcome {
+  flex: 1;
+  overflow: auto;
+  position: relative;
+  isolation: isolate;
+}
+
+/* The kit's grid, fading out downwards. */
+.welcome::before {
+  content: '';
+  position: absolute;
+  inset: 0 0 auto;
+  height: 560px;
+  z-index: -1;
+  background: url('./assets/ui/pattern-grid.svg') center top / 32px 32px;
+  opacity: 0.16;
+  -webkit-mask-image: linear-gradient(to bottom, #000 30%, transparent);
+  mask-image: linear-gradient(to bottom, #000 30%, transparent);
+  pointer-events: none;
+}
+
+.welcome-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 48px 16px;
+  max-width: 680px;
+  margin: 0 auto;
+}
+
+.hero-emblem {
+  display: block;
+  margin-bottom: 20px;
+}
+
+.eyebrow {
+  font-family: var(--font-subtitle);
+  font-size: 10px;
+  line-height: 1.8;
+  text-transform: uppercase;
+  color: var(--green);
+  margin: 0 0 12px;
+}
+
+.welcome h1 {
+  font-family: var(--font-title);
+  font-weight: 400;
+  font-size: clamp(34px, 7.5vw, 52px);
+  line-height: 1;
+  text-transform: uppercase;
+  color: var(--green);
+  margin: 0 0 20px;
+  text-wrap: balance;
+}
+
+.welcome h1 em {
+  font-style: normal;
+  color: var(--black);
+  background: var(--orange);
+  padding: 0 0.15em;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+
+.lead {
+  color: var(--muted);
+  font-size: 17px;
+  line-height: 1.55;
+  margin: 0 0 32px;
+  text-wrap: pretty;
+}
+
+.drop-hint {
+  font-family: var(--mono);
+  color: var(--muted);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin: 14px 0 40px;
+}
+
+@media (pointer: coarse) {
+  .drop-hint {
+    display: none;
+  }
+}
+
+.promises {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 2px;
+  text-align: left;
+  width: 100%;
+  background: var(--border);
+  border: 2px solid var(--border);
+  counter-reset: promise;
+}
+
+@media (min-width: 640px) {
+  .promises {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.promises li {
+  position: relative;
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  background: var(--surface);
+  padding: 18px 16px 16px;
+  line-height: 1.45;
+  font-size: 15px;
+  color: var(--muted);
+  counter-increment: promise;
+}
+
+.promises li::after {
+  content: '0' counter(promise);
+  position: absolute;
+  top: 8px;
+  right: 10px;
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--border);
+}
+
+.promises .icon {
+  color: var(--green);
+  margin-top: 1px;
+}
+
+.promises strong {
+  color: var(--text);
+}
+
+.install {
+  margin-top: 28px;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.install-title {
+  margin: 0 0 10px;
+  color: var(--text);
+}
+
+/* Numbered steps read better left-aligned, in the centred welcome column. */
+.install-steps {
+  margin: 0;
+  padding-left: 3ch;
+  text-align: left;
+  line-height: 1.5;
+}
+
+.install-steps li + li {
+  margin-top: 6px;
+}
+
+.welcome-footer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px 20px;
+  margin-top: 40px;
+}
+
+/* The kit's alert, with hazard stripes along the edge. */
+.errors {
+  position: relative;
+  margin: 12px 16px 0;
+  padding: 12px 14px 12px 28px;
+  background: color-mix(in srgb, var(--danger) 10%, var(--bg));
+  border: 2px solid var(--danger);
+  font-size: 14px;
+  line-height: 1.45;
+}
+
+.errors::before {
+  content: '';
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 14px;
+  background: var(--hazard);
+}
+
+.errors p {
+  margin: 0 0 6px;
+}
+
+.errors strong {
+  color: var(--orange);
+}
+
+/* Editor layout: photo on top on phones, side panel on wide screens */
+
+.editor {
+  flex: 1;
+  min-height: 0;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  grid-template-areas: 'strip' 'workspace' 'panel';
+}
+
+@media (min-width: 900px) {
+  .editor {
+    grid-template-columns: minmax(0, 1fr) 340px;
+    grid-template-rows: auto minmax(0, 1fr);
+    grid-template-areas: 'strip strip' 'workspace panel';
+  }
+}
+
+.strip {
+  grid-area: strip;
+  display: flex;
+  gap: 10px;
+  padding: 10px 16px;
+  overflow-x: auto;
+  border-bottom: 2px solid var(--border);
+}
+
+.thumb {
+  position: relative;
+  flex: none;
+}
+
+.thumb > button:first-child {
+  display: block;
+  padding: 0;
+  border: 2px solid var(--border);
+  border-radius: 0;
+  overflow: hidden;
+  background: none;
+}
+
+.thumb.active > button:first-child {
+  border-color: var(--green);
+}
+
+.thumb img {
+  display: block;
+  height: 56px;
+  width: auto;
+}
+
+.thumb-badge {
+  position: absolute;
+  left: 2px;
+  bottom: 2px;
+  background: var(--black);
+  color: var(--green);
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 700;
+  padding: 1px 5px;
+}
+
+.thumb.active .thumb-badge {
+  background: var(--green);
+  color: var(--black);
+}
+
+.thumb-remove {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  width: 22px;
+  height: 22px;
+  display: grid;
+  place-items: center;
+  border-radius: 0;
+  border: 2px solid var(--border);
+  background: var(--bg);
+  color: var(--text);
+  padding: 0;
+}
+
+.thumb-remove:hover {
+  border-color: var(--orange);
+  background: var(--orange);
+  color: var(--black);
+}
+
+.workspace {
+  grid-area: workspace;
+  position: relative;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.stage {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  display: grid;
+  background:
+    url('./assets/ui/pattern-grid.svg') center / 32px 32px,
+    #061113;
+  background-blend-mode: soft-light;
+  /* Panning and pinch-zoom are handled by the app (Stage.tsx), not by the browser. */
+  touch-action: none;
+}
+
+.stage-content {
+  position: relative;
+  margin: auto;
+}
+
+.stage-canvas,
+.stage-overlay {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.stage-overlay {
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+}
+
+.stage-overlay.panning {
+  cursor: grabbing;
+}
+
+.stage-overlay.drawing {
+  cursor: crosshair;
+}
+
+.stage-overlay.picking .zone-box {
+  cursor: pointer;
+}
+
+.stage-overlay.drawing .zone {
+  pointer-events: none;
+}
+
+.zone-box {
+  fill: transparent;
+  stroke: var(--zone);
+  stroke-width: 2;
+  stroke-dasharray: 6 4;
+  vector-effect: non-scaling-stroke;
+  cursor: move;
+  touch-action: none;
+}
+
+.zone.area .zone-box {
+  stroke: var(--zone-area);
+}
+
+.zone.manual .zone-box {
+  stroke: var(--zone-manual);
+}
+
+.zone.kept .zone-box {
+  stroke: var(--zone-kept);
+  stroke-dasharray: 2 4;
+}
+
+.zone-label {
+  fill: var(--zone-kept);
+  stroke: var(--black);
+  stroke-width: 3;
+  paint-order: stroke;
+  vector-effect: non-scaling-stroke;
+  text-anchor: middle;
+  font-family: var(--mono);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  pointer-events: none;
+}
+
+.zone.selected .zone-box {
+  stroke-dasharray: none;
+  stroke-width: 2.5;
+}
+
+.zone-core {
+  fill: none;
+  stroke: var(--ice);
+  stroke-opacity: 0.6;
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
+  pointer-events: none;
+}
+
+.zone-handle {
+  fill: var(--black);
+  stroke: var(--green);
+  stroke-width: 2.5;
+  vector-effect: non-scaling-stroke;
+  touch-action: none;
+  cursor: nwse-resize;
+}
+
+.zone-draft {
+  fill: color-mix(in srgb, var(--zone-manual) 18%, transparent);
+  stroke: var(--zone-manual);
+  stroke-width: 2;
+  vector-effect: non-scaling-stroke;
+}
+
+/* The kit's "in progress" status. */
+.busy {
+  position: absolute;
+  top: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: color-mix(in srgb, var(--black) 92%, transparent);
+  border: 2px solid var(--steel);
+  padding: 10px 16px;
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+}
+
+.busy-text {
+  min-width: 250px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* The kit's progress bar: an outlined track, filled with an inset bar. */
+.progress-bar {
+  display: block;
+  height: 12px;
+  padding: 2px;
+  border: 2px solid var(--green);
+  overflow: hidden;
+}
+
+.progress-bar > span {
+  display: block;
+  height: 100%;
+  background: var(--green);
+  transition: width 0.2s;
+}
+
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: calc(24px + env(safe-area-inset-bottom));
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--black);
+  border: 2px solid var(--steel);
+  padding: 10px 18px;
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  z-index: 5;
+}
+
+.header .icon-button + .button {
+  margin-left: 0;
+}
+
+.header .icon-button {
+  padding: 8px 10px;
+  display: grid;
+  place-items: center;
+}
+
+.busy.error {
+  white-space: normal;
+  max-width: calc(100% - 32px);
+  border-color: var(--danger);
+  color: var(--danger);
+}
+
+/* Square, like everything in the kit. */
+.spinner {
+  flex: none;
+  width: 14px;
+  height: 14px;
+  border: 2px solid var(--green);
+  animation: spin 1.2s steps(8) infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .spinner {
+    animation-duration: 4s;
+  }
+}
+
+.stage-tools {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  border-top: 2px solid var(--border);
+}
+
+.round {
+  min-width: 40px;
+  height: 40px;
+  border-radius: 0;
+  border: 2px solid var(--border);
+  background: transparent;
+  font-family: var(--mono);
+  font-size: 18px;
+}
+
+.round:not(:disabled):hover {
+  border-color: var(--steel);
+}
+
+.round.wide {
+  margin-left: auto;
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 0 14px;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+  touch-action: none;
+}
+
+.round.on {
+  border-color: var(--green);
+  color: var(--green);
+}
+
+.zoom-label {
+  min-width: 40px;
+  text-align: center;
+  font-family: var(--mono);
+  font-size: 13px;
+  color: var(--green);
+}
+
+/* Side panel */
+
+.panel {
+  grid-area: panel;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 18px 16px;
+  background: var(--surface);
+  border-top: 2px solid var(--border);
+  overflow-y: auto;
+  max-height: 46vh;
+}
+
+@media (min-width: 900px) {
+  .panel {
+    border-top: none;
+    border-left: 2px solid var(--border);
+    max-height: none;
+  }
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.label {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 8px;
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--steel);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.label output {
+  font-family: var(--mono);
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--green);
+  text-transform: none;
+}
+
+.hint {
+  font-size: 13px;
+  line-height: 1.45;
+  color: var(--muted);
+}
+
+/* Sliders: a thin track with the kit's square orange handle. */
+input[type='range'] {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 28px;
+  margin: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+input[type='range']::-webkit-slider-runnable-track {
+  height: 4px;
+  background: var(--border);
+}
+
+input[type='range']::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 16px;
+  height: 20px;
+  margin-top: -8px;
+  border: 2px solid var(--black);
+  border-radius: 0;
+  background: var(--orange);
+}
+
+input[type='range']::-moz-range-track {
+  height: 4px;
+  background: var(--border);
+}
+
+input[type='range']::-moz-range-progress {
+  height: 4px;
+  background: var(--green);
+}
+
+input[type='range']::-moz-range-thumb {
+  width: 12px;
+  height: 16px;
+  border: 2px solid var(--black);
+  border-radius: 0;
+  background: var(--orange);
+}
+
+.segmented {
+  display: flex;
+  border: 2px solid var(--border);
+  padding: 2px;
+  gap: 2px;
+}
+
+.segmented button {
+  flex: 1;
+  border: none;
+  background: none;
+  border-radius: 0;
+  padding: 8px 4px;
+  min-height: 36px;
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.segmented button:not(.active):hover {
+  color: var(--text);
+  background: var(--surface-2);
+}
+
+.segmented button.active {
+  background: var(--green);
+  color: var(--black);
+  font-weight: 700;
+}
+
+.swatches {
+  display: flex;
+  gap: 10px;
+}
+
+.swatch {
+  width: 30px;
+  height: 30px;
+  border-radius: 0;
+  border: 2px solid var(--border);
+  padding: 0;
+}
+
+.swatch.active {
+  outline: 2px solid var(--green);
+  outline-offset: 2px;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.actions .button {
+  flex: 1 1 auto;
+}
+
+.actions .full {
+  flex-basis: 100%;
+}
+
+.check.toggle {
+  margin: 0;
+  font-weight: 600;
+}
+
+.check.toggle .hint {
+  display: block;
+  font-weight: normal;
+  margin-top: 4px;
+}
+
+.warning {
+  color: var(--zone-manual);
+  font-weight: 600;
+}
+
+.sound {
+  margin: 16px 0 0;
+}
+
+/* Welcome: second button, under the first one */
+
+.camera-button {
+  margin-top: 10px;
+}
+
+/* In-app camera */
+
+.camera {
+  position: fixed;
+  inset: 0;
+  z-index: 20;
+  background: #000;
+  display: flex;
+  flex-direction: column;
+  padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+}
+
+.camera video {
+  flex: 1;
+  min-height: 0;
+  width: 100%;
+  object-fit: contain;
+}
+
+.camera video.mirrored {
+  transform: scaleX(-1);
+}
+
+.camera-note,
+.camera-error {
+  margin: 8px 16px 0;
+  font-size: 13px;
+  text-align: center;
+  color: var(--muted);
+}
+
+.camera-error {
+  color: var(--danger);
+}
+
+.camera-bar {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 16px;
+  padding: 16px;
+}
+
+.camera-bar .button:last-child {
+  justify-self: end;
+  font-size: 22px;
+}
+
+/* Shutter: the kit's target frame around an orange block. */
+.shutter {
+  width: 72px;
+  height: 72px;
+  border: 3px solid var(--ice);
+  border-radius: 0;
+  background: var(--orange);
+  box-shadow: inset 0 0 0 5px #000;
+}
+
+.shutter:not(:disabled):active {
+  background: var(--green);
+}
+
+/* Dialog: the kit's window frame, title bar included. */
+
+.dialog-backdrop {
+  position: fixed;
+  inset: 0;
+  background: color-mix(in srgb, var(--black) 75%, transparent);
+  -webkit-backdrop-filter: blur(3px);
+  backdrop-filter: blur(3px);
+  display: grid;
+  place-items: center;
+  padding: 16px;
+  z-index: 10;
+}
+
+.dialog {
+  width: 100%;
+  max-width: 460px;
+  max-height: calc(100% - 16px);
+  overflow-y: auto;
+  background: var(--surface);
+  border: 2px solid var(--green);
+  padding: 0 20px 20px;
+  line-height: 1.5;
+}
+
+.dialog::before {
+  content: '';
+  display: block;
+  height: 28px;
+  margin: 0 -20px 18px;
+  border-bottom: 2px solid var(--green);
+  background: url('./assets/ui/window-controls.svg') right 6px center / 52px 16px no-repeat;
+}
+
+.dialog h2 {
+  margin: 0 0 10px;
+  font-family: var(--font-title);
+  font-weight: 400;
+  font-size: 28px;
+  line-height: 1;
+  text-transform: uppercase;
+  color: var(--green);
+}
+
+.muted {
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.check {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  margin: 16px 0;
+  font-weight: 600;
+}
+
+.check input {
+  width: 20px;
+  height: 20px;
+  margin-top: 2px;
+  accent-color: var(--green);
+  flex: none;
+}
+
+.dialog-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: flex-end;
+}
+
+.dialog-actions.column {
+  flex-direction: column;
+  align-items: stretch;
+}
+
+.busy-inline {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 0;
+  font-family: var(--mono);
+  font-size: 13px;
+}
+
+.metadata {
+  background: var(--bg);
+  border: 2px solid var(--border);
+  padding: 12px 14px;
+  margin-top: 12px;
+}
+
+.metadata > strong {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--steel);
+}
+
+.metadata p {
+  margin: 4px 0 8px;
+}
+
+.chips {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.chips li {
+  font-family: var(--mono);
+  font-size: 12px;
+  line-height: 1.3;
+  padding: 3px 8px;
+  background: color-mix(in srgb, var(--danger) 12%, var(--bg));
+  border: 1px solid var(--danger);
+  text-decoration: line-through;
+  text-decoration-color: var(--orange);
+}
+
+.verified {
+  color: var(--zone);
+  font-family: var(--mono);
+  font-size: 13px;
+  font-weight: 700;
+  margin: 0 0 6px;
+}
+
+/* Video */
+
+.timeline {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px 0;
+  border-top: 2px solid var(--border);
+}
+
+.time-label {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--green);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+  text-align: right;
+  line-height: 1.35;
+}
+
+.timeline + .stage-tools {
+  border-top: none;
+}
+
+.zone-range {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.zone-range-buttons {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.small {
+  font-size: 13px;
+}
+
+/* Right under "ou glissez-les ici", which touch screens hide. */
+.video-note {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  width: 100%;
+  text-align: left;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.5;
+  background: var(--surface);
+  border: 2px solid var(--border);
+  border-left-color: var(--steel);
+  padding: 14px 16px;
+  margin: -16px 0 32px;
+}
+
+.video-note p {
+  margin: 0;
+}
+
+.video-note strong {
+  color: var(--text);
+}
+
+.video-note .icon {
+  color: var(--steel);
+}
+
+/* Touch screens hide "ou glissez-les ici": the note follows the buttons directly. */
+@media (pointer: coarse) {
+  .video-note {
+    margin-top: 24px;
+  }
+}
+
+.check .small {
+  font-weight: normal;
+}
+
+.speed {
+  height: 40px;
+  border-radius: 0;
+  border: 2px solid var(--border);
+  background: var(--bg);
+  color: inherit;
+  font: inherit;
+  font-family: var(--mono);
+  font-size: 13px;
+  padding: 0 8px;
+}
+
+/* Time slider, with the range and keyframes of the selected hand-drawn zone under it */
+
+.scrubber {
+  position: relative;
+  flex: 1;
+  min-width: 0;
+  display: flex;
+}
+
+.scrubber input[type='range'] {
+  width: 100%;
+}
+
+.scrubber-marks {
+  position: absolute;
+  left: 8px;
+  right: 8px;
+  bottom: -5px;
+  height: 6px;
+  pointer-events: none;
+}
+
+.scrubber-span {
+  position: absolute;
+  top: 2px;
+  height: 2px;
+  background: var(--zone-manual);
+  opacity: 0.6;
+}
+
+.scrubber-key {
+  position: absolute;
+  top: 0;
+  width: 6px;
+  height: 6px;
+  margin-left: -3px;
+  background: var(--zone-manual);
+}
+
+/* Phones: tighter header and tools. Last, to override the rules above. */
+@media (max-width: 440px) {
+  .header {
+    gap: 8px;
+  }
+
+  .header .button,
+  .header .icon-button {
+    padding: 6px 10px;
+  }
+
+  .header .button-label {
+    display: none;
+  }
+
+  .local-badge {
+    font-size: 10px;
+    letter-spacing: 0.04em;
+    padding: 3px 7px;
+  }
+
+  .round.wide {
+    white-space: nowrap;
+    letter-spacing: 0;
+  }
+}

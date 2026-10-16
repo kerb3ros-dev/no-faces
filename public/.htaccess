@@ -1,0 +1,48 @@
+# Apache hosts (OVH web hosting…): same headers as public/_headers, which only Cloudflare Pages and Netlify read.
+
+# HTTPS everywhere: the service worker, the camera and multi-threaded detection all need a secure context.
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteCond %{HTTPS} off
+  RewriteCond %{HTTP:X-Forwarded-Proto} !https
+  RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+</IfModule>
+
+# Types Apache does not always know: without them, browsers refuse the detection engine.
+AddType application/wasm .wasm
+AddType text/javascript .mjs
+AddType application/manifest+json .webmanifest
+AddType application/octet-stream .onnx
+AddType font/woff2 .woff2
+
+# connect-src 'self' forbids any network request to another site: photos cannot be sent anywhere.
+# camera=(self): photos taken inside the app (never saved to the camera roll); no microphone.
+# COOP + COEP make the page cross-origin isolated, which enables multi-threaded detection.
+<IfModule mod_headers.c>
+  Header always set Cross-Origin-Opener-Policy "same-origin"
+  Header always set Cross-Origin-Embedder-Policy "require-corp"
+  Header always set Content-Security-Policy "default-src 'self'; script-src 'self' 'wasm-unsafe-eval'; worker-src 'self' blob:; connect-src 'self'; img-src 'self' blob: data:; style-src 'self' 'unsafe-inline'; object-src 'none'; base-uri 'self'; form-action 'none'; frame-ancestors 'none'"
+  Header always set Referrer-Policy "no-referrer"
+  Header always set Permissions-Policy "camera=(self), microphone=(), geolocation=()"
+  Header always set X-Content-Type-Options "nosniff"
+  Header always set Strict-Transport-Security "max-age=31536000"
+
+  # The page and the service worker are always checked, so that updates arrive; hashed files never change.
+  <FilesMatch "^(index\.html|sw\.js|manifest\.webmanifest)$">
+    Header set Cache-Control "no-cache"
+  </FilesMatch>
+  # Names hashed by the build (index-CWSBh1pC.css…). Not an <If> block: it would drop the headers above.
+  <FilesMatch "-[\w-]{8}\.(js|css|woff2?|svg|png)$">
+    Header set Cache-Control "public, max-age=31536000, immutable"
+  </FilesMatch>
+</IfModule>
+
+# The engine (WebAssembly, 26 MB) and the models shrink a lot when compressed.
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/css text/javascript application/javascript application/json application/manifest+json application/wasm application/octet-stream image/svg+xml
+</IfModule>
+
+# Cloudflare / Netlify configuration: useless here.
+<Files "_headers">
+  Require all denied
+</Files>
